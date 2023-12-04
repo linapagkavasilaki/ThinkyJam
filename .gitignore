@@ -71,6 +71,7 @@ Intermediate/*
 Plugins/*/Intermediate/*
 
 *.vsconfig
+*.idea
 
 # Cache files for the editor to use
 DerivedDataCache/*
