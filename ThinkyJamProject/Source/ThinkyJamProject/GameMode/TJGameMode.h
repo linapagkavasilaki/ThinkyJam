@@ -65,17 +65,60 @@ protected:
     float AnnoyanceMultiplier;
 
 
-    //Changes Affection meter based on value multiplied with the AffectionMultiplier
-    UFUNCTION()
-    void ChangeAffection(int value);
+    //Change Modifiers
 
-    //Changes Trust meter based on value multiplied with the TrustMultiplier
-    UFUNCTION()
-    void ChangeTrust(int value);
+    //Increase
+    //Modifier that has the AffectionMultiplier added to it, used for increase of affection
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifier | Increase")
+    float AffectionIncreaseMod;
 
-    //Changes Annoyance meter based on value multiplied with the AnnoyanceMultiplier
-    UFUNCTION()
-    void ChangeAnnoyance(int value);
+    //Modifier that has the TrustMultiplier added to it, used for increase of trust
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifier | Increase")
+    float TrustIncreaseMod;
+
+    //Modifier that has the AnnoyanceMultiplier added to it, used for increase of annoyance
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifier | Increase")
+    float AnnoyanceIncreaseMod;
+
+
+    //Decrease
+    //Modifier that has the AffectionMultiplier added to it, used for decrease of affection
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifier | Decrease")
+    float AffectionDecreaseMod;
+
+    //Modifier that has the TrustMultiplier added to it, used for decrease of trust
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifier | Decrease")
+    float TrustDecreaseMod;
+
+    //Modifier that has the AnnoyanceMultiplier added to it, used for decrease of annoyance
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifier | Decrease")
+    float AnnoyanceDecreaseMod;
+
+
+
+    //Increases Affection meter based on value multiplied with the AffectionMultiplier
+    UFUNCTION(BlueprintCallable)
+    void IncreaseAffection(int value);
+
+    //Decreases Affection meter based on value multiplied with the AffectionMultiplier
+    UFUNCTION(BlueprintCallable)
+    void DecreaseAffection(int value);
+
+    //Increases Trust meter based on value multiplied with the TrustMultiplier
+    UFUNCTION(BlueprintCallable)
+    void IncreaseTrust(int value);
+
+    //Decreases Trust meter based on value multiplied with the TrustMultiplier
+    UFUNCTION(BlueprintCallable)
+    void DecreaseTrust(int value);
+
+    //Increases Annoyance meter based on value multiplied with the AnnoyanceMultiplier
+    UFUNCTION(BlueprintCallable)
+    void IncreaseAnnoyance(int value);
+
+    //Decreases Annoyance meter based on value multiplied with the AnnoyanceMultiplier
+    UFUNCTION(BlueprintCallable)
+    void DecreaseAnnoyance(int value);
 
 
 private:

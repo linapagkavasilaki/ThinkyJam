@@ -18,17 +18,25 @@ ATJGameMode::ATJGameMode()
     TrustMultiplier = 1.f;
     AnnoyanceMultiplier = 1.f;
 
+    AffectionIncreaseMod = 1.f;
+    TrustIncreaseMod = 1.f;
+    AnnoyanceIncreaseMod = 1.f;
+
+    AffectionDecreaseMod = 1.f;
+    TrustDecreaseMod = 1.f;
+    AnnoyanceIncreaseMod = 1.f;
+
     OldAffection = 0.f;
     OldTrust = 0.f;
     OldAnnoyance = 0.f;
 }
 
 
- void ATJGameMode::ChangeAffection(int value)
+void ATJGameMode::IncreaseAffection(int value)
 {
     //Store old value and change meter based on value and multiplier
     OldAffection = AffectionMeter;
-    AffectionMeter += value * AffectionMultiplier;
+    AffectionMeter += value * (AffectionIncreaseMod + AffectionMultiplier);
 
     //Get the change in percentage to calculate the new multiplier with
     float PercentageChange = (AffectionMeter - OldAffection) / OldAffection;
@@ -38,11 +46,25 @@ ATJGameMode::ATJGameMode()
     CalculateAnnoyanceRate(PercentageChange);
 }
 
-void ATJGameMode::ChangeTrust(int value)
+void ATJGameMode::DecreaseAffection(int value)
+{
+    //Store old value and change meter based on value and multiplier
+    OldAffection = AffectionMeter;
+    AffectionMeter += value * (AffectionDecreaseMod + AffectionMultiplier);
+
+    //Get the change in percentage to calculate the new multiplier with
+    float PercentageChange = (AffectionMeter - OldAffection) / OldAffection;
+
+    //Unsure what meter needs to be changed, assumptions made for now
+    CalculateTrustRate(PercentageChange);
+    CalculateAnnoyanceRate(PercentageChange);
+}
+
+void ATJGameMode::IncreaseTrust(int value)
 {
     //Store old value and change meter based on value and multiplier
     OldTrust = TrustMeter;
-    TrustMeter += value * TrustMultiplier;
+    TrustMeter += value * (TrustIncreaseMod + TrustMultiplier);
 
     //Get the change in percentage to calculate the new multiplier with
     float PercentageChange = (TrustMeter - OldTrust) / OldTrust;
@@ -52,11 +74,38 @@ void ATJGameMode::ChangeTrust(int value)
     CalculateAnnoyanceRate(PercentageChange);
 }
 
-void ATJGameMode::ChangeAnnoyance(int value)
+void ATJGameMode::DecreaseTrust(int value)
+{
+    //Store old value and change meter based on value and multiplier
+    OldTrust = TrustMeter;
+    TrustMeter += value * (TrustDecreaseMod + TrustMultiplier);
+
+    //Get the change in percentage to calculate the new multiplier with
+    float PercentageChange = (TrustMeter - OldTrust) / OldTrust;
+
+    //Unsure what meter needs to be changed, assumptions made for now
+    CalculateAffectionRate(PercentageChange);
+    CalculateAnnoyanceRate(PercentageChange);
+}
+
+void ATJGameMode::IncreaseAnnoyance(int value)
 {
     //Store old value and change meter based on value and multiplier
     OldAnnoyance = AnnoyanceMeter;
-    AnnoyanceMeter += value * AnnoyanceMultiplier;
+    AnnoyanceMeter += value * (AnnoyanceIncreaseMod + AnnoyanceMultiplier);
+
+    //Get the change in percentage to calculate the new multiplier with
+    float PercentageChange = (AnnoyanceMeter - OldAnnoyance) / OldAnnoyance;
+
+    //Unsure what meter needs to be changed, assumptions made for now
+    CalculateAffectionRate(PercentageChange);
+}
+
+void ATJGameMode::DecreaseAnnoyance(int value)
+{
+    //Store old value and change meter based on value and multiplier
+    OldAnnoyance = AnnoyanceMeter;
+    AnnoyanceMeter += value * (AnnoyanceDecreaseMod + AnnoyanceMultiplier);
 
     //Get the change in percentage to calculate the new multiplier with
     float PercentageChange = (AnnoyanceMeter - OldAnnoyance) / OldAnnoyance;
