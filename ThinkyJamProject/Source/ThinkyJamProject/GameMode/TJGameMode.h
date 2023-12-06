@@ -3,12 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Math/UnrealMathUtility.h"
 #include "GameFramework/GameModeBase.h"
 #include "TJGameMode.generated.h"
 
-/**
- * 
- */
+//Forward declaration
+
+struct FMath;
+
 UCLASS()
 class THINKYJAMPROJECT_API ATJGameMode : public AGameModeBase
 {
@@ -23,15 +25,15 @@ protected:
     //Meters
 
     //Meter keeping track of Affection, value ranges between 0.0 and 1.0
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Meters")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Meters")
     float AffectionMeter;
 
     //Meter keeping track of trust, value ranges between 0.0 and 1.0
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Meters")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Meters")
     float TrustMeter;
 
     //Meter keeping track of annoyance, value ranges between 0.0 and 1.0
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Meters")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Meters")
     float AnnoyanceMeter;
 
 
@@ -52,48 +54,39 @@ protected:
 
     //Multipliers
 
-    //Multiplier that is multiplied with a value that is added or subtracted from a meter
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Multipliers")
-    float AffectionMultiplier;
-
-    //Multiplier that is multiplied with a value that is added or subtracted from a meter
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Multipliers")
-    float TrustMultiplier;
-
-    //Multiplier that is multiplied with a value that is added or subtracted from a meter
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Multipliers")
-    float AnnoyanceMultiplier;
-
-
-    //Change Modifiers
-
     //Increase
-    //Modifier that has the AffectionMultiplier added to it, used for increase of affection
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifier | Increase")
-    float AffectionIncreaseMod;
+    //Multiplier that is multiplied with a value that is added to a meter
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Multipliers")
+    float AffectionIncreaseMultiplier;
 
-    //Modifier that has the TrustMultiplier added to it, used for increase of trust
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifier | Increase")
-    float TrustIncreaseMod;
+    //Multiplier that is multiplied with a value that is added to a meter
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Multipliers")
+    float TrustIncreaseMultiplier;
 
-    //Modifier that has the AnnoyanceMultiplier added to it, used for increase of annoyance
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifier | Increase")
-    float AnnoyanceIncreaseMod;
-
+    //Multiplier that is multiplied with a value that is added to a meter
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Multipliers")
+    float AnnoyanceIncreaseMultiplier;
 
     //Decrease
-    //Modifier that has the AffectionMultiplier added to it, used for decrease of affection
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifier | Decrease")
-    float AffectionDecreaseMod;
+    //Multiplier that is multiplied with a value that is subtracted from a meter
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Multipliers")
+    float AffectionDecreaseMultiplier;
 
-    //Modifier that has the TrustMultiplier added to it, used for decrease of trust
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifier | Decrease")
-    float TrustDecreaseMod;
+    //Multiplier that is multiplied with a value that is subtracted from a meter
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Multipliers")
+    float TrustDecreaseMultiplier;
 
-    //Modifier that has the AnnoyanceMultiplier added to it, used for decrease of annoyance
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifier | Decrease")
-    float AnnoyanceDecreaseMod;
+    //Multiplier that is multiplied with a value that is subtracted from a meter
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Multipliers")
+    float AnnoyanceDecreaseMultiplier;
 
+
+    //Clamping values
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Meter Clamps")
+    float MinMeterValue;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Meter Clamps")
+    float MaxMeterValue;
 
 
     //Increases Affection meter based on value multiplied with the AffectionMultiplier
@@ -128,8 +121,12 @@ private:
     float OldAnnoyance;
 
     //Functions that calculate the new multipliers
-    void CalculateAffectionRate(float change);
-    void CalculateTrustRate(float change);
-    void CalculateAnnoyanceRate(float change);
+    void CalculateAffectionIncreaseRate(float change);
+    void CalculateTrustIncreaseRate(float change);
+    void CalculateAnnoyanceIncreaseRate(float change);
+
+    void CalculateAffectionDecreaseRate(float change);
+    void CalculateTrustDecreaseRate(float change);
+    void CalculateAnnoyanceDecreaseRate(float change);
 
 };
