@@ -77,7 +77,9 @@ void ATJGameMode::IncreaseTrust(int value)
 
     //Unsure what meter needs to be changed, assumptions made for now
     CalculateAffectionIncreaseRate(PercentageChange);
-    CalculateAnnoyanceIncreaseRate(PercentageChange);
+    CalculateAffectionDecreaseRate(-PercentageChange);
+    CalculateAnnoyanceIncreaseRate(-PercentageChange);
+    CalculateAnnoyanceDecreaseRate(PercentageChange);
 }
 
 void ATJGameMode::DecreaseTrust(int value)
@@ -91,8 +93,10 @@ void ATJGameMode::DecreaseTrust(int value)
     float PercentageChange = (TrustMeter - OldTrust) / OldTrust;
 
     //Unsure what meter needs to be changed, assumptions made for now
+    CalculateAffectionIncreaseRate(-PercentageChange);
     CalculateAffectionDecreaseRate(PercentageChange);
-    CalculateAnnoyanceDecreaseRate(PercentageChange);
+    CalculateAnnoyanceIncreaseRate(PercentageChange);
+    CalculateAnnoyanceDecreaseRate(-PercentageChange);
 }
 
 void ATJGameMode::IncreaseAnnoyance(int value)
@@ -106,6 +110,7 @@ void ATJGameMode::IncreaseAnnoyance(int value)
     float PercentageChange = (AnnoyanceMeter - OldAnnoyance) / OldAnnoyance;
 
     //Unsure what meter needs to be changed, assumptions made for now
+    CalculateAffectionIncreaseRate(-PercentageChange);
     CalculateAffectionDecreaseRate(PercentageChange);
 }
 
@@ -121,6 +126,7 @@ void ATJGameMode::DecreaseAnnoyance(int value)
 
     //Unsure what meter needs to be changed, assumptions made for now
     CalculateAffectionIncreaseRate(PercentageChange);
+    CalculateAffectionDecreaseRate(-PercentageChange);
 }
 
 
