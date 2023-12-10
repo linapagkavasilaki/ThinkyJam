@@ -9,7 +9,7 @@
 ATJWidgetActor::ATJWidgetActor()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bCanEverTick = true;
 
     MeshComp = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
     MeshComp->SetCollisionProfileName(UCollisionProfile::BlockAll_ProfileName);
@@ -22,6 +22,14 @@ void ATJWidgetActor::BeginPlay()
 {
 	Super::BeginPlay();
 	
+    if (IsValid(WidgetTemplate))
+    {
+        WidgetInstance = CreateWidget<UUserWidget>(GetWorld(), WidgetTemplate);
+
+        WidgetInstance->AddToViewport();
+    }
+
+    ViewportSize = FVector2D(GEngine->GameViewport->Viewport->GetSizeXY());
 }
 
 // Called every frame
@@ -29,16 +37,21 @@ void ATJWidgetActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+    //UpdatePosition();
 }
 
 void ATJWidgetActor::ResizeMesh()
 {
-    if (IsValid(Widget))
+    if (IsValid(WidgetInstance))
     {
-        Widget->ForceLayoutPrepass();
+        FVector2D Size = WidgetInstance->GetDesiredSize();
 
-        FVector2D Size = Widget->GetDesiredSize();
-
-        MeshComp->SetWorldScale3D(FVector(Size.X, Size.Y, 1));
+        MeshComp->SetWorldScale3D(FVector(Size.X / 50, Size.Y / 50, 0.01));
     }
+}
+
+void ATJWidgetActor::UpdatePosition()
+{
+    FTransform Transf = MeshComp->GetComponentTransform();
+    WidgetInstance->SetPositionInViewport(FVector2D{ Transf.GetLocation().X / ViewportSize.X, Transf.GetLocation().Y / ViewportSize.Y });
 }

@@ -29,7 +29,7 @@ protected:
     UStaticMeshComponent* MeshComp;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widget")
-    UUserWidget* Widget;
+    TSubclassOf<UUserWidget> WidgetTemplate;
 
     //Sizes the mesh to the widget's size
     UFUNCTION(BlueprintCallable)
@@ -39,4 +39,10 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+
+private:
+
+    UUserWidget* WidgetInstance;
+    void UpdatePosition();
+    FVector2D ViewportSize;
 };
