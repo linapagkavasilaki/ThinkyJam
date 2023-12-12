@@ -16,7 +16,11 @@ struct THINKYJAMPROJECT_API FSaveData
 
     //Current position, since this can change during runtime it needs to be saved
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Saved Variables")
-    FVector2D Position;
+    FVector Position;
+
+    //Current rotation, since this can change during runtime it needs to be saved
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Saved Variables")
+    FRotator Rotator;
 
     //Current text being displayed, since this is mainly user made it needs to be saved
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Saved Variables")
