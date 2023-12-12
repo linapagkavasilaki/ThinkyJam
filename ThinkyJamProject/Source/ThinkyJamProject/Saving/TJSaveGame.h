@@ -19,4 +19,8 @@ public:
     
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
     TArray<FSaveData> StoredData;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    int StickyNoteBaseID = 1000;
+
 };

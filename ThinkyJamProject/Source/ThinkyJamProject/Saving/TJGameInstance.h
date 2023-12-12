@@ -25,7 +25,7 @@ class THINKYJAMPROJECT_API UTJGameInstance : public UGameInstance
 public:
 
     UFUNCTION(BlueprintCallable)
-    void SaveGameData(TArray<FSaveData> SavingData);
+    void SaveGameData(TArray<FSaveData> SavingData, int StickyCount);
 
     UFUNCTION(BlueprintCallable)
     UTJSaveGame* LoadGameData();
