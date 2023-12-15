@@ -43,6 +43,4 @@ public:
 private:
 
     UUserWidget* WidgetInstance;
-    void UpdatePosition();
-    FVector2D ViewportSize;
 };
