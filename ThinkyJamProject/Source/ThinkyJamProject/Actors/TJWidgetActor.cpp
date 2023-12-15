@@ -29,7 +29,6 @@ void ATJWidgetActor::BeginPlay()
         WidgetInstance->AddToViewport();
     }
 
-    ViewportSize = FVector2D(GEngine->GameViewport->Viewport->GetSizeXY());
 }
 
 // Called every frame
@@ -37,7 +36,6 @@ void ATJWidgetActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-    //UpdatePosition();
 }
 
 void ATJWidgetActor::ResizeMesh()
@@ -46,12 +44,13 @@ void ATJWidgetActor::ResizeMesh()
     {
         FVector2D Size = WidgetInstance->GetDesiredSize();
 
-        MeshComp->SetWorldScale3D(FVector(Size.X / 50, Size.Y / 50, 0.01));
-    }
-}
+        FBox BoundBox = MeshComp->GetStaticMesh()->GetBoundingBox();
 
-void ATJWidgetActor::UpdatePosition()
-{
-    FTransform Transf = MeshComp->GetComponentTransform();
-    WidgetInstance->SetPositionInViewport(FVector2D{ Transf.GetLocation().X / ViewportSize.X, Transf.GetLocation().Y / ViewportSize.Y });
+        FVector BoxSize = BoundBox.GetSize();
+
+        MeshComp->SetWorldScale3D(FVector(Size.X / BoxSize.X, Size.Y / BoxSize.Y, 0.01));
+
+        WidgetInstance->RemoveFromViewport();
+        WidgetInstance = nullptr;
+    }
 }
